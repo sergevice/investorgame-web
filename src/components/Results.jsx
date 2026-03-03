@@ -157,10 +157,11 @@ function ReturnsBarchart() {
 }
 
 function SinglePieChart({ name, weights, icon }) {
-  // Filter out zero-weight assets
+  // Filter out zero-weight assets, sort by weight descending
   const entries = ASSETS
     .map(a => ({ asset: a, weight: (weights[a.ticker] || 0) * 100 }))
-    .filter(e => e.weight > 0.5);
+    .filter(e => e.weight > 0.5)
+    .sort((a, b) => b.weight - a.weight);
 
   const data = {
     labels: entries.map(e => `${e.asset.icon} ${e.asset.name}`),
@@ -201,16 +202,19 @@ function SinglePieChart({ name, weights, icon }) {
       <div className="h-40 sm:h-48 relative">
         <Doughnut data={data} options={options} />
       </div>
-      {/* Compact legend below chart */}
-      <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1">
+      {/* Legend with asset names */}
+      <div className="mt-3 space-y-1">
         {entries.map(e => (
-          <div key={e.asset.ticker} className="flex items-center gap-1">
+          <div key={e.asset.ticker} className="flex items-center gap-1.5">
             <span
-              className="w-2 h-2 rounded-full flex-shrink-0"
+              className="w-2.5 h-2.5 rounded-full flex-shrink-0"
               style={{ backgroundColor: CATEGORY_COLORS[e.asset.category] || '#25aae2' }}
             />
-            <span className="text-[10px] text-slate-400">
-              {e.asset.icon} {e.weight.toFixed(0)}%
+            <span className="text-[11px] text-slate-300 truncate flex-1 min-w-0">
+              {e.asset.icon} {e.asset.name}
+            </span>
+            <span className="text-[11px] text-slate-400 font-medium tabular-nums flex-shrink-0">
+              {e.weight.toFixed(0)}%
             </span>
           </div>
         ))}
@@ -230,7 +234,7 @@ function PortfolioPieCharts({ portfolios, userName }) {
   return (
     <div>
       <h3 className="text-lg font-bold text-white mb-3">Структура портфелів</h3>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {portfolioMeta.map(p => (
           <SinglePieChart
             key={p.key}
