@@ -1,0 +1,13 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "functions": {
+    "api/prices.js": {
+      "maxDuration": 30
+    },
+    "api/submit.js": {
+      "maxDuration": 10
+    }
+  }
+}
