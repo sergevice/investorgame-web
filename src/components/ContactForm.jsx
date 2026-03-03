@@ -167,7 +167,7 @@ export default function ContactForm({ onSubmit, onBack }) {
               onChange={e => setName(e.target.value)}
               placeholder="Олександр"
               autoComplete="given-name"
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-nmu-sky focus:ring-1 focus:ring-nmu-sky transition-colors"
             />
             {errors.name && (
               <p className="mt-1 text-xs text-red-400">{errors.name}</p>
@@ -188,7 +188,7 @@ export default function ContactForm({ onSubmit, onBack }) {
               onPaste={handlePhonePaste}
               onFocus={handlePhoneFocus}
               placeholder="+380 XX XXX XX XX"
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors tracking-wide"
+              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-nmu-sky focus:ring-1 focus:ring-nmu-sky transition-colors tracking-wide"
             />
             {errors.phone && (
               <p className="mt-1 text-xs text-red-400">{errors.phone}</p>
@@ -198,7 +198,7 @@ export default function ContactForm({ onSubmit, onBack }) {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-base shadow-lg shadow-indigo-500/25 cursor-pointer mt-2 disabled:opacity-50"
+            className="w-full py-4 rounded-2xl bg-gradient-to-r from-nmu-sky to-nmu-mid text-white font-bold text-base shadow-lg shadow-nmu-sky/25 cursor-pointer mt-2 disabled:opacity-50"
           >
             {submitting ? 'Зачекайте...' : 'Показати результати'}
           </button>

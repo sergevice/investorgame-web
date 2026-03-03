@@ -9,7 +9,7 @@
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: linear-gradient(135deg, #0f0a2e 0%, #1a1145 50%, #0f0a2e 100%);
+  background: linear-gradient(135deg, #061e38 0%, #093864 50%, #061e38 100%);
   min-height: 100dvh;
   color: #e2e8f0;
   overflow-x: hidden;
@@ -28,7 +28,7 @@ input[type="range"] {
   width: 100%;
   height: 6px;
   border-radius: 3px;
-  background: #312e81;
+  background: #0d3a66;
   outline: none;
 }
 input[type="range"]::-webkit-slider-thumb {
@@ -37,19 +37,19 @@ input[type="range"]::-webkit-slider-thumb {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #6366f1;
+  background: #25aae2;
   cursor: pointer;
-  border: 2px solid #818cf8;
-  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  border: 2px solid #4fc3f7;
+  box-shadow: 0 0 10px rgba(37, 170, 226, 0.5);
 }
 input[type="range"]::-moz-range-thumb {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #6366f1;
+  background: #25aae2;
   cursor: pointer;
-  border: 2px solid #818cf8;
-  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  border: 2px solid #4fc3f7;
+  box-shadow: 0 0 10px rgba(37, 170, 226, 0.5);
 }
 
 @keyframes float {

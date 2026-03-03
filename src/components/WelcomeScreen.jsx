@@ -18,7 +18,7 @@ export default function WelcomeScreen({ onStart }) {
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="text-3xl sm:text-4xl lg:text-5xl font-extrabold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4"
+        className="text-3xl sm:text-4xl lg:text-5xl font-extrabold bg-gradient-to-r from-nmu-sky via-nmu-light to-white bg-clip-text text-transparent mb-4"
       >
         Інвестиційна гра
       </motion.h1>
@@ -59,7 +59,7 @@ export default function WelcomeScreen({ onStart }) {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={onStart}
-        className="px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-lg shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-shadow cursor-pointer"
+        className="px-8 py-4 rounded-2xl bg-gradient-to-r from-nmu-sky to-nmu-mid text-white font-bold text-lg shadow-lg shadow-nmu-sky/30 hover:shadow-nmu-sky/50 transition-shadow cursor-pointer"
       >
         Почати гру
       </motion.button>

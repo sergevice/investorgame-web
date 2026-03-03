@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ASSETS, TOTAL_INVESTMENT, CATEGORY_COLORS } from '../data/assets';
 
 function AllocationSlider({ asset, value, onChange }) {
-  const color = CATEGORY_COLORS[asset.category] || '#818cf8';
+  const color = CATEGORY_COLORS[asset.category] || '#25aae2';
   const amount = (value / 100) * TOTAL_INVESTMENT;
 
   return (
@@ -31,7 +31,7 @@ function AllocationSlider({ asset, value, onChange }) {
         onChange={e => onChange(parseInt(e.target.value))}
         className="w-full"
         style={{
-          background: `linear-gradient(to right, ${color} 0%, ${color} ${value}%, #312e81 ${value}%, #312e81 100%)`,
+          background: `linear-gradient(to right, ${color} 0%, ${color} ${value}%, #0d3a66 ${value}%, #0d3a66 100%)`,
         }}
       />
     </div>
@@ -117,7 +117,7 @@ export default function PortfolioBuilder({ onSubmit }) {
         <div className="mt-2 h-1.5 bg-white/10 rounded-full overflow-hidden">
           <motion.div
             className={`h-full rounded-full ${
-              isValid ? 'bg-emerald-500' : total > 100 ? 'bg-red-500' : 'bg-indigo-500'
+              isValid ? 'bg-emerald-500' : total > 100 ? 'bg-red-500' : 'bg-nmu-sky'
             }`}
             animate={{ width: `${Math.min(total, 100)}%` }}
             transition={{ duration: 0.2 }}
@@ -178,12 +178,12 @@ export default function PortfolioBuilder({ onSubmit }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
             className="fixed bottom-0 left-0 right-0 z-50 p-4 safe-bottom"
-            style={{ background: 'linear-gradient(to top, rgba(15,10,46,0.95) 60%, transparent)' }}
+            style={{ background: 'linear-gradient(to top, rgba(6,30,56,0.95) 60%, transparent)' }}
           >
             <div className="max-w-3xl mx-auto">
               <button
                 onClick={handleSubmit}
-                className="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-base shadow-lg shadow-indigo-500/30 cursor-pointer"
+                className="w-full py-4 rounded-2xl bg-gradient-to-r from-nmu-sky to-nmu-mid text-white font-bold text-base shadow-lg shadow-nmu-sky/30 cursor-pointer"
               >
                 Інвестувати
               </button>

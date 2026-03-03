@@ -30,7 +30,7 @@ function FullChart({ asset }) {
   const dates = getAllDates();
   const prices = getAllPrices(asset.ticker);
   const midpoint = GAME_DATA.midpoint;
-  const color = CATEGORY_COLORS[asset.category] || '#818cf8';
+  const color = CATEGORY_COLORS[asset.category] || '#25aae2';
 
   const labels = dates.map(d => {
     const date = new Date(d);
@@ -80,7 +80,7 @@ function FullChart({ asset }) {
       y: {
         display: true,
         ticks: { color: '#475569', font: { size: 9 }, maxTicksLimit: 3 },
-        grid: { color: '#1e1b4b' },
+        grid: { color: '#0a2d52' },
         border: { display: false },
       },
     },
@@ -134,7 +134,7 @@ function ReturnsBarchart() {
     scales: {
       x: {
         ticks: { color: '#64748b', callback: v => v + '%' },
-        grid: { color: '#1e1b4b' },
+        grid: { color: '#0a2d52' },
         border: { display: false },
       },
       y: {
@@ -158,7 +158,7 @@ function ReturnsBarchart() {
 function PortfolioComparison({ portfolios }) {
   const tickers = ASSETS.map(a => a.ticker);
   const portfolioNames = Object.keys(portfolios);
-  const colors = ['#818cf8', '#f59e0b', '#22c55e', '#ec4899'];
+  const colors = ['#25aae2', '#f59e0b', '#22c55e', '#ec4899'];
 
   const data = {
     labels: ASSETS.map(a => a.icon),
@@ -192,7 +192,7 @@ function PortfolioComparison({ portfolios }) {
       },
       y: {
         ticks: { color: '#64748b', callback: v => v + '%' },
-        grid: { color: '#1e1b4b' },
+        grid: { color: '#0a2d52' },
         border: { display: false },
       },
     },
@@ -224,7 +224,7 @@ function Leaderboard({ entries, userName }) {
               transition={{ delay: i * 0.15 }}
               className={`flex items-center justify-between p-3 rounded-xl transition-colors ${
                 isUser
-                  ? 'bg-indigo-500/20 border border-indigo-500/30'
+                  ? 'bg-nmu-sky/20 border border-nmu-sky/30'
                   : 'bg-white/3 border border-transparent'
               }`}
             >
@@ -233,9 +233,9 @@ function Leaderboard({ entries, userName }) {
                   {i < 3 ? medals[i] : <span className="text-sm text-slate-500">{i + 1}</span>}
                 </span>
                 <div>
-                  <p className={`text-sm font-semibold ${isUser ? 'text-indigo-300' : 'text-white'}`}>
+                  <p className={`text-sm font-semibold ${isUser ? 'text-nmu-light' : 'text-white'}`}>
                     {entry.name}
-                    {isUser && <span className="ml-1.5 text-xs text-indigo-400">(ти)</span>}
+                    {isUser && <span className="ml-1.5 text-xs text-nmu-sky">(ти)</span>}
                   </p>
                   <p className="text-xs text-slate-500">{entry.label}</p>
                 </div>
@@ -281,13 +281,13 @@ function ResultMessage({ rank, total }) {
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-2xl p-6 border border-indigo-500/30 text-center"
+        className="bg-gradient-to-r from-nmu-sky/20 to-nmu-mid/20 rounded-2xl p-6 border border-nmu-sky/30 text-center"
       >
         <div className="text-4xl mb-2">📉</div>
-        <h3 className="text-xl font-bold text-indigo-300 mb-2">
+        <h3 className="text-xl font-bold text-nmu-light mb-2">
           Хочеш покращити свої прибутки?
         </h3>
-        <p className="text-sm text-indigo-200/80">
+        <p className="text-sm text-nmu-light/80">
           Вступай на кафедру економіки та економічної кібернетики і дізнайся, як використовувати сучасні моделі для створення оптимальних портфелів!
         </p>
       </motion.div>
@@ -438,7 +438,7 @@ export default function Results({ userWeights, userName, onReplay }) {
           href="https://ekit.nmu.org.ua/ua/"
           target="_blank"
           rel="noopener noreferrer"
-          className="block w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-base text-center shadow-lg shadow-indigo-500/25"
+          className="block w-full py-4 rounded-2xl bg-gradient-to-r from-nmu-sky to-nmu-mid text-white font-bold text-base text-center shadow-lg shadow-nmu-sky/25"
         >
           Дізнатися більше про кафедру
         </a>

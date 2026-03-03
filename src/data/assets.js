@@ -14,11 +14,11 @@ export const ASSETS = [
 export const TOTAL_INVESTMENT = 10000;
 
 export const CATEGORY_COLORS = {
-  "Акції": "#818cf8",
+  "Акції": "#25aae2",
   "Крипто": "#f59e0b",
   "Сировина": "#22c55e",
   "Метали": "#eab308",
   "Валюта": "#06b6d4",
   "Фонди": "#ec4899",
-  "Індекси": "#8b5cf6",
+  "Індекси": "#035f8e",
 };

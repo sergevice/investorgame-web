@@ -19,7 +19,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, 
 function MiniChart({ asset }) {
   const dates = getTrainDates();
   const prices = getTrainPrices(asset.ticker);
-  const color = CATEGORY_COLORS[asset.category] || '#818cf8';
+  const color = CATEGORY_COLORS[asset.category] || '#25aae2';
   const change = ((prices[prices.length - 1] - prices[0]) / prices[0]) * 100;
 
   const labels = dates.map(d => {
@@ -113,14 +113,14 @@ export default function AssetCharts({ onNext }) {
       {/* Fixed bottom CTA */}
       <div
         className="fixed bottom-0 left-0 right-0 z-50 p-4 safe-bottom"
-        style={{ background: 'linear-gradient(to top, rgba(15,10,46,0.95) 60%, transparent)' }}
+        style={{ background: 'linear-gradient(to top, rgba(6,30,56,0.95) 60%, transparent)' }}
       >
         <div className="max-w-3xl mx-auto">
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.95 }}
             onClick={onNext}
-            className="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-base shadow-lg shadow-indigo-500/30 cursor-pointer"
+            className="w-full py-4 rounded-2xl bg-gradient-to-r from-nmu-sky to-nmu-mid text-white font-bold text-base shadow-lg shadow-nmu-sky/30 cursor-pointer"
           >
             Зібрати портфель
           </motion.button>
