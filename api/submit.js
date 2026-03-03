@@ -42,11 +42,15 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true, saved: false, reason: 'no_spreadsheet_id' });
     }
 
+    // Get the actual name of the first sheet (original used gspread .sheet1)
+    const meta = await sheets.spreadsheets.get({ spreadsheetId, fields: 'sheets.properties.title' });
+    const firstSheetName = meta.data.sheets?.[0]?.properties?.title || 'Sheet1';
+
     const timestamp = new Date().toISOString();
 
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: 'Sheet1!A:C',
+      range: `'${firstSheetName}'!A:C`,
       valueInputOption: 'USER_ENTERED',
       requestBody: {
         values: [[name, phone, timestamp]],
