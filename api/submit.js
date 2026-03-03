@@ -1,4 +1,4 @@
-import { google } from 'googleapis';
+import { getSheets } from './_sheets.js';
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -20,27 +20,13 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Name and phone are required' });
     }
 
-    const encodedCreds = process.env.GOOGLE_CREDENTIALS;
-    if (!encodedCreds) {
-      console.warn('GOOGLE_CREDENTIALS not set, skipping Google Sheets save');
+    const sheetsClient = getSheets();
+    if (!sheetsClient) {
+      console.warn('Google Sheets credentials not configured, skipping save');
       return res.status(200).json({ success: true, saved: false, reason: 'no_credentials' });
     }
 
-    const credentials = JSON.parse(Buffer.from(encodedCreds, 'base64').toString('utf-8'));
-
-    const auth = new google.auth.GoogleAuth({
-      credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-    });
-
-    const sheets = google.sheets({ version: 'v4', auth });
-
-    // Find spreadsheet by name - use the spreadsheet ID from env or default
-    const spreadsheetId = process.env.GOOGLE_SPREADSHEET_ID;
-    if (!spreadsheetId) {
-      console.warn('GOOGLE_SPREADSHEET_ID not set');
-      return res.status(200).json({ success: true, saved: false, reason: 'no_spreadsheet_id' });
-    }
+    const { sheets, spreadsheetId } = sheetsClient;
 
     // Get the actual name of the first sheet (original used gspread .sheet1)
     const meta = await sheets.spreadsheets.get({ spreadsheetId, fields: 'sheets.properties.title' });
