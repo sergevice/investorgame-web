@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Line, Bar } from 'react-chartjs-2';
+import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,6 +8,7 @@ import {
   PointElement,
   LineElement,
   BarElement,
+  ArcElement,
   Filler,
   Tooltip,
   Legend,
@@ -24,7 +25,7 @@ import {
   GAME_DATA,
 } from '../data/gameData';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Filler, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Filler, Tooltip, Legend);
 
 function FullChart({ asset }) {
   const dates = getAllDates();
@@ -107,7 +108,7 @@ function FullChart({ asset }) {
 
 function ReturnsBarchart() {
   const data = {
-    labels: ASSETS.map(a => a.icon + ' ' + a.ticker),
+    labels: ASSETS.map(a => a.icon + ' ' + a.name),
     datasets: [{
       data: ASSETS.map(a => getAssetReturn(a.ticker) * 100),
       backgroundColor: ASSETS.map(a => {
@@ -155,54 +156,89 @@ function ReturnsBarchart() {
   );
 }
 
-function PortfolioComparison({ portfolios }) {
-  const tickers = ASSETS.map(a => a.ticker);
-  const portfolioNames = Object.keys(portfolios);
-  const colors = ['#25aae2', '#f59e0b', '#22c55e', '#ec4899'];
+function SinglePieChart({ name, weights, icon }) {
+  // Filter out zero-weight assets
+  const entries = ASSETS
+    .map(a => ({ asset: a, weight: (weights[a.ticker] || 0) * 100 }))
+    .filter(e => e.weight > 0.5);
 
   const data = {
-    labels: ASSETS.map(a => a.icon),
-    datasets: portfolioNames.map((name, i) => ({
-      label: name,
-      data: tickers.map(t => (portfolios[name][t] || 0) * 100),
-      backgroundColor: colors[i % colors.length] + '99',
-      borderColor: colors[i % colors.length],
-      borderWidth: 1,
-      borderRadius: 4,
-    })),
+    labels: entries.map(e => `${e.asset.icon} ${e.asset.name}`),
+    datasets: [{
+      data: entries.map(e => e.weight),
+      backgroundColor: entries.map(e =>
+        (CATEGORY_COLORS[e.asset.category] || '#25aae2') + 'cc'
+      ),
+      borderColor: entries.map(e =>
+        CATEGORY_COLORS[e.asset.category] || '#25aae2'
+      ),
+      borderWidth: 1.5,
+      hoverOffset: 6,
+    }],
   };
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    cutout: '55%',
     plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { color: '#94a3b8', font: { size: 11 }, boxWidth: 12 },
-      },
+      legend: { display: false },
       tooltip: {
-        callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` },
+        callbacks: {
+          label: ctx => ` ${ctx.label}: ${ctx.raw.toFixed(1)}%`,
+        },
       },
     },
-    scales: {
-      x: {
-        ticks: { color: '#94a3b8', font: { size: 14 } },
-        grid: { display: false },
-        border: { display: false },
-      },
-      y: {
-        ticks: { color: '#64748b', callback: v => v + '%' },
-        grid: { color: '#0a2d52' },
-        border: { display: false },
-      },
-    },
+    animation: { duration: 800 },
   };
 
   return (
     <div className="bg-white/5 rounded-2xl p-4 border border-white/5">
-      <h3 className="text-lg font-bold text-white mb-3">Порівняння портфелів</h3>
-      <div className="h-64 sm:h-72">
-        <Bar data={data} options={options} />
+      <div className="flex items-center gap-2 mb-3">
+        <span className="text-lg">{icon}</span>
+        <h4 className="text-sm font-semibold text-white truncate">{name}</h4>
+      </div>
+      <div className="h-40 sm:h-48 relative">
+        <Doughnut data={data} options={options} />
+      </div>
+      {/* Compact legend below chart */}
+      <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1">
+        {entries.map(e => (
+          <div key={e.asset.ticker} className="flex items-center gap-1">
+            <span
+              className="w-2 h-2 rounded-full flex-shrink-0"
+              style={{ backgroundColor: CATEGORY_COLORS[e.asset.category] || '#25aae2' }}
+            />
+            <span className="text-[10px] text-slate-400">
+              {e.asset.icon} {e.weight.toFixed(0)}%
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function PortfolioPieCharts({ portfolios, userName }) {
+  const portfolioMeta = [
+    { key: userName, icon: '🧑', label: 'Твій портфель' },
+    { key: 'Марковіц', icon: '📐', label: 'Марковіц' },
+    { key: 'ШІ Grok', icon: '🤖', label: 'ШІ Grok' },
+    { key: 'NeuralProphet + Марковіц', icon: '🔮', label: 'NP + Марковіц' },
+  ];
+
+  return (
+    <div>
+      <h3 className="text-lg font-bold text-white mb-3">Структура портфелів</h3>
+      <div className="grid grid-cols-2 gap-3">
+        {portfolioMeta.map(p => (
+          <SinglePieChart
+            key={p.key}
+            name={p.label}
+            icon={p.icon}
+            weights={portfolios[p.key] || {}}
+          />
+        ))}
       </div>
     </div>
   );
@@ -393,7 +429,7 @@ export default function Results({ userWeights, userName, onReplay }) {
         transition={{ delay: 0.6 }}
         className="mb-6"
       >
-        <PortfolioComparison portfolios={portfolios} />
+        <PortfolioPieCharts portfolios={portfolios} userName={userName} />
       </motion.div>
 
       {/* Asset returns */}
